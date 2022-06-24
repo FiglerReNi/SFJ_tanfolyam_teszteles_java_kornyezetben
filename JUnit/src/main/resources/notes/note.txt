@@ -1,0 +1,72 @@
+Unit teszt: (Junit, TestNG)
+	Alacsony szintű teszt. Egyetlen egységre fókuszál. Az osztályhoz tartozó függvényeket teszteli egyesével. Nincsen külső függőség, nem foglalkozik a program többi részével.
+	Ha több tesztesetet vizsgálunk és csak egy is elbukik, akkor az egész teszt elbukik.
+	Ezek a tesztek újra lefuttathatók, ha valaki például módosít a kódon és meg akarjuk nézni, hogy minden jó maradt-e.
+	Általában ezt a fejlesztők írják.
+	Példa:
+		Van egy funkció ami összead számokat, ezt tudom úgy tesztelni, hogy beadok számokat és vizsgálom, hogy az eredmény egyezik-e az elvárttal.
+
+Integration teszt:
+	A szoftver különböző részeit teszteljük együtt. Lehet, hogy külön-külön az egységek jól működtek, de együtt nem biztos.
+	Példa:
+		Adatbázis és java kód tesztje
+
+Functional teszt: (Selenium)
+	User szintű tesztek. Az elkészült szoftvert tesztelik. Olyan hibákat fed fel, amik az előző két szinten nem jöttek elő. Például elgépelések, nem aktív egy gomb hasonlók.
+	Sok esetben automatizálható. Erre a Selenium használható.
+	Példa:
+		Játékok esetében a béta tesztek, amikor megjelenés előtt lehet játszani a játékkal, hogy kiderüljenek a hibák.
+
+Stressz teszt: (JMeter)
+	Felméri az elkészült szoftver tűrőképességét és hogy min kell módosítani. Kellhet több erőforrás, vagy a szoftvert kell optimalizálni.
+	Példa:
+		Weblap esetén, ha sok felhasználó használja egyszerre működik-e gond nélkül.
+
+Penetration teszt:
+	Azt nézik, mennyire feltörhető a szoftver.
+
+Tesztelési módszerek:
+	Hagyományos:
+		Megírom a kódot és utána írok hozzá unit teszteket
+	TDD: (Test-Driven-Development)
+		Előbb készítem el a tesztesetet, egy kis egységre, ez először el fog bukni. Annyit módosítok csak a kódon, hogy átmenjen ezen az első teszten. Ezután írok egy következő tesztesetet, ami szintén el fog bukni, ezért újra módosítok csak annyit a kódon, hogy ezen is átmenjen, és így tovább.
+
+
+JUnit
+  		○ A junit 5 dependency kell a pom.xml-be.
+  		○ A teszt osztály neve ugyanaz mint az eredetié csak Test előtaggal.
+  		○ A tesztelendő osztályból kell egy példányt csinálnunk.
+  		○ @BeforeEach - setUp method - itt megadhatunk olyan dolgokat, amiket minden egyes teszteset előtt szeretnénk lefuttatni.
+  		○ @AfterEach - tearDown method - itt minden teszteset után lefutó dolgokat adunk meg, pl ürítjük az objektumokat.
+  		○ @BeforeAll – a tesztosztály első lépéseként fut le, minden előtt, mielőtt bármelyik teszteset lefutna. Static-nak kell lennie.
+  		○ @AfterAll – a tesztosztály utolsó lépéseként fut le minden után. Static-nak kell lennie.
+  		○ @Test - ezzel jelöljük a teszt eseteket
+  		○ Ha exception várunk a tesztben azt a @Test(expected = vartException.class )-al tudjuk megadni
+  		○ összehasonlítás:
+  			▪ assertEquals
+  			▪ assertTrue
+  			▪ assertFalse
+  			▪ assertNotNull
+  			▪ assertNull
+  			▪ assertAll
+  			▪ assertArrayEquals
+  		○ Mockolás:
+  			Előfordul, hogy a kód amit unit teszttel tesztelünk, függ egy másik objektumtól. Ilyenkor ennek a másik objektumnak egy leegyszerűsített változatát használjuk a tesztünkbe, hiszen nem a kettő együttműködésére vagyunk kiváncsiak. Csak azért kell, hogy a unit teszt le tudjon futni.
+  			Ezt a leegyszerűsített változatot létrehozhatjuk mockolással. Meg lehet oldani mockolás nélkül is ha csak egy egyszerűbb objektumról van szó. A mockolást akkor alkalmazzuk inkább, ha külső kapcsolatra lenne szükség, például adatbázis kapcsolatra, http requestet küldenénk stb.
+  			Mockolás nélkül:
+  				dummy object - csak azért hozzuk létre, mert pl paraméterként át kell adni, de nem tartalmaz implementációt
+  				facke object - nagyon egyszerű implementáció, hogy egy adott függvénye vissza tudjon térni egy általunk megadott fix értékkel, ami helyes a teszt szempontjából
+  			Mockolva:
+  				Kell dependency hozzá a pom.xml-be -> mockito.core
+  				stub object - mockitoval létrehozott objektum, amin beállítottuk hogy viselkedjen, de amit nem verifyoltunk még.
+  				mock object - amit verifyoltunk, vagyis leellenőriztük, hogy a tesztelendő függvény tényleg használja-e azt a függőséget amit mockoltunk.
+  			Annotáció nélkül:
+  				Mockito.mock(OsztályAmitMockolniAkarunk.class) - ezt utána konstruktorban adjuk át az alap osztály példányosításakor
+  			Használat:
+  				when után ha megadunk egy általános minden esetre (paraméterre) igaz visszatérést, akkor nem adhatunk meg speciális esetet egy másik when-nel ugyanabban a tesztesetben.
+  				Ha pedig megadtunk egy speciálisat, nem adhatunk meg általánosat.
+
+
+
+
+

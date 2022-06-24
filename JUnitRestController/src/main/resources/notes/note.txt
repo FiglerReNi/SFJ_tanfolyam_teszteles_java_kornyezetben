@@ -1,0 +1,8 @@
+SpringBoot JUnit:
+	○ A junit dependency benne van alapból.
+	○ Összehasonlítás
+		▪ assertThan().isEqualTo() - SpringBoot
+	○ Mockolás
+		A dependencyt nem kell behúzni, mert benne van alapból
+	○ SpringBoot RestController tesztelése úgy történik, hogy a teszt osztályban létre kell hoznunk egy virtuális szerver környezetet, ami elküldi a post requestet. A requestet a RequestBuilderrel állítjuk össze, és az MockMvc-vel tudjuk elküldeni, majd kivenni a választ. A response a http kódot is tartalmazza. Az osztály fölé kell a @WebMvcTest(value = HomeController.class) annotáció.
+	○ SprinBootban ha a tesztelendő osztályunkba injektálva van egy függőség, akkor a teszt osztályba is dependency injectionnal kell létrehoznunk a mockolt változatát. Erre van a @MockBean annotáció.
